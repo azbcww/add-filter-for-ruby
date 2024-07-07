@@ -8,38 +8,10 @@ def read_erb_file
     Dir.glob("**/*.erb")
 end
 
-def find_methods_with_p(sexp, result = [])
-    return result unless sexp.is_a?(Array)
-    if sexp[0] == :def
-      method_name = sexp[1][1]
-      body = sexp[3]
-      if includes_p_call?(body, method_name)
-        result << method_name
-      end
-    else
-      sexp.each do |sub_sexp|
-        find_methods_with_p(sub_sexp, result)
-      end
-    end
-  
-    result
-  end
-
-def includes_p_call?(sexp, method_name)
-    return false unless sexp.is_a?(Array)
-  
-    sexp.any? do |sub_sexp|
-      if sub_sexp.is_a?(Array) && sub_sexp[0] == :command && sub_sexp[1][1] == "p"
-        true
-      else
-        includes_p_call?(sub_sexp, method_name)
-      end
-    end
-  end
-
-
   def find_methods_with(sexp, func, result = [])
     return result unless sexp.is_a?(Array)
+    pp "#"*40
+    pp sexp
     if sexp[0] == :def
       method_name = sexp[1][1]
       body = sexp[3]
@@ -68,5 +40,58 @@ def includes_the_call?(sexp, method_name, func)
       else
         includes_the_call?(sub_sexp, method_name, func)
       end
+    end
+  end
+
+  def check(parsed_code, filename, func)
+    methods_with_p = find_methods_with(parsed_code, func)
+    if methods_with_p.any?
+        puts "Methods containing '"+func+"' in #{filename}: #{methods_with_p.join(', ')}"
+    else
+        puts "No methods containing '"+func+"' found in #{filename}."
+    end
+  end
+
+  
+
+
+  def find_methods_with_extract(sexp, func, result = [])
+    return result unless sexp.is_a?(Array)
+    if sexp[0] == :command
+        pp "#"*40
+    pp sexp
+    pp "0"*40
+    pp sexp[0]
+    pp "1"*40
+    pp sexp[1]
+    pp "2"*40
+    pp sexp[2]
+    pp "3"*40
+    pp sexp[3]
+    pp "*"*40
+      method_name = sexp[1][1]
+      body = sexp[3]
+    #   if includes_the_call?(body, method_name, func)
+    #     result << method_name
+    #   end
+    if sexp[1][1] == func
+        result << method_name
+      end
+    else
+      sexp.each do |sub_sexp|
+        find_methods_with_extract(sub_sexp, func, result)
+      end
+    end
+  
+    result
+  end
+
+
+  def check_extract(parsed_code, filename, func)
+    methods_with_p = find_methods_with_extract(parsed_code, func)
+    if methods_with_p.any?
+        puts "Methods containing '"+func+"' in #{filename}: #{methods_with_p.join(', ')}"
+    else
+        puts "No methods containing '"+func+"' found in #{filename}."
     end
   end

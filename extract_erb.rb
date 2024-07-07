@@ -18,9 +18,10 @@ def extract_all
         puts "Extracting Ruby code from #{filename}:"
         erb_content = File.read(filename)
         extracted_ruby_code = extract_ruby_code(erb_content)
-        puts "-" * 40
         parsed_code = Ripper.sexp(extracted_ruby_code)
+        puts "-" * 40
         pp parsed_code
         puts "-" * 40
+        check_extract(parsed_code, filename, "paginate")
     end
 end

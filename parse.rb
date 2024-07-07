@@ -14,12 +14,3 @@ def parse_all
         check(parsed_code, filename, "p")
     end
 end
-
-def check(parsed_code, filename, func)
-  methods_with_p = find_methods_with(parsed_code, func)
-  if methods_with_p.any?
-      puts "Methods containing '"+func+"' in #{filename}: #{methods_with_p.join(', ')}"
-  else
-      puts "No methods containing '"+func+"' found in #{filename}."
-  end
-end
