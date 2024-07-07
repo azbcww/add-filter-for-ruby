@@ -12,7 +12,7 @@ def extract_ruby_code(erb_content)
   ruby_code.join("\n")
 end
 
-def extract
+def extract_all
     erb_files = read_erb_file
     erb_files.each do |filename|
         puts "Extracting Ruby code from #{filename}:"
