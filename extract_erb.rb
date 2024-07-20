@@ -13,15 +13,15 @@ def extract_ruby_code(erb_content)
 end
 
 def extract_all
-    erb_files = read_erb_file
-    erb_files.each do |filename|
-        puts "Extracting Ruby code from #{filename}:"
-        erb_content = File.read(filename)
-        extracted_ruby_code = extract_ruby_code(erb_content)
-        parsed_code = Ripper.sexp(extracted_ruby_code)
-        puts "-" * 40
-        pp parsed_code
-        puts "-" * 40
-        check_extract(parsed_code, filename, "paginate")
-    end
+  erb_files = read_erb_file
+  erb_files.each do |filename|
+    puts "Extracting Ruby code from #{filename}:"
+    erb_content = File.read(filename)
+    extracted_ruby_code = extract_ruby_code(erb_content)
+    parsed_code = Ripper.sexp(extracted_ruby_code)
+    puts "-" * 40
+    pp parsed_code
+    puts "-" * 40
+    check_extract(parsed_code, filename, "paginate")
+  end
 end
