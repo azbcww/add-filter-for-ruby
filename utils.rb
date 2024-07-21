@@ -8,6 +8,11 @@ def read_erb_file
     Dir.glob("**/*.erb")
 end
 
+#docker run -v ./../:/mnt --env DIR=myapp --rm image_nameの形で呼ぶ
+def read_app_erb_file
+  Dir.glob("../#{ENV["DIR"]}/app/views/**/*.erb")
+end
+
 def find_methods_with(sexp, func, result = [])
   return result unless sexp.is_a?(Array)
   if sexp[0] == :def
