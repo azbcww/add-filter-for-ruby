@@ -76,7 +76,9 @@ def check_extract(parsed_code, filename, func)
   methods_with_p = find_methods_with_extract(parsed_code, func)
   if methods_with_p.any?
       puts "Methods containing '"+func+"' in #{filename}: #{methods_with_p.join(', ')}"
+      return true
   else
       puts "No methods containing '"+func+"' found in #{filename}."
+      return false
   end
 end
