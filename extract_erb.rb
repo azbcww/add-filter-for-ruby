@@ -39,6 +39,14 @@ def export_url(filenames)
   end
   puts "\nchanged files:\n"
   filenames.each do |filename|
-      puts filename
+    # パスを分割して配列にする
+    parts = filename.split('/')
+
+    # ディレクトリ名 "home" を取得
+    file_name = parts[-2]
+
+    # ファイル名の一部 "show" を取得
+    func_name = (parts[-1].split('.'))[0]
+    puts filename, "../#{ENV["DIR"]}/app/controllers/#{file_name}_controller.rb", func_name
   end
 end
