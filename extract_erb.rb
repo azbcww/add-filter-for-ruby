@@ -8,7 +8,7 @@ require './parse.rb'
 def extract_ruby_code(erb_content)
   ruby_code = []
   erb_scanner = ERB::Compiler::Scanner.new(erb_content, nil, true)
-  erb_content.scan(/<%=?\s*(.*?)\s*%>/m).each do |match|
+  erb_content.scan(/^\s*(?!#)\s*<%=?\s*(.*?)\s*%>/m).each do |match|
     ruby_code << "#{match.first.strip}"
   end
   ruby_code.join("\n")
@@ -72,7 +72,7 @@ def edit_controller(filenames)
           suffix = $3  # ]
       
           # 任意の文字列の後ろに追加する文字列を追加
-          "#{prefix}#{content}, #{func_name}#{suffix}"
+          "#{prefix}#{content} #{func_name}#{suffix}"
         end
       end
       # 修正した内容をファイルに書き込む
