@@ -1,13 +1,9 @@
 # add-filter-for-ruby
 
-## parser
-```
-$ docker build -t ruby_parser .
-$ docker run -v ./:/mnt --rm ruby_parser
-```
+Clone to the directory on the same level as the project you wish to modify.
 
-## extract
+## command
 ```
-$ docker build -t extract_erb .
-$ docker run -v ./:/mnt --rm extract_erb
+$ docker build -t add-app .
+$ docker run -v ./:/mnt --env DIR=[your_app_dir_name] --rm add-app
 ```
